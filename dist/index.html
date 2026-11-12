@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050914" />
+  <meta name="description" content="ODYSSEY is an AI-powered mission planning experience for planetary analog expeditions." />
+  <title>ODYSSEY — Mission Control</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="loader" aria-hidden="true">
+    <div class="loader__reticle"><span></span><i></i></div>
+    <div class="loader__copy">
+      <span>ODYSSEY / SYSTEM INITIALIZING</span>
+      <strong><b id="loaderValue">00</b>%</strong>
+    </div>
+    <div class="loader__track"><i id="loaderBar"></i></div>
+  </div>
+
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><i></i></div>
+
+  <header class="nav shell">
+    <a class="brand" href="#top" aria-label="ODYSSEY home">
+      <span class="brand__mark"></span>
+      <span>ODYSSEY</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#mission">Mission</a>
+      <a href="#system">System</a>
+      <a href="#capabilities">Capabilities</a>
+    </nav>
+    <a class="nav__action" href="#system"><span>Enter control</span><i>↗</i></a>
+  </header>
+
+  <main id="top">
+    <section class="hero" id="mission" aria-label="ODYSSEY introduction">
+      <div class="hero__sticky">
+        <div class="scanline" aria-hidden="true"></div>
+        <div class="hero__grid" aria-hidden="true"></div>
+        <div class="planet-wrap" aria-hidden="true">
+          <div class="planet-glow"></div>
+          <img class="planet" src="./assets/earth-hero.png" alt="" />
+          <div class="orbit orbit--one"></div>
+          <div class="orbit orbit--two"></div>
+          <span class="site site--one"><i></i><b>AL-01</b></span>
+          <span class="site site--two"><i></i><b>AL-02</b></span>
+          <span class="site site--three"><i></i><b>AL-03</b></span>
+        </div>
+
+        <div class="hero__meta hero__meta--left">
+          <span>LAT 24.7136° N</span>
+          <span>LONG 46.6753° E</span>
+        </div>
+        <div class="hero__meta hero__meta--right">
+          <span>MISSION CLOCK</span>
+          <strong id="missionClock">00:00:00</strong>
+        </div>
+
+        <div class="hero__copy shell">
+          <p class="eyebrow"><span></span>AI-POWERED MISSION PLANNING</p>
+          <h1><span>Plan beyond Earth.</span><em>Without leaving it.</em></h1>
+          <p class="hero__lede">Turn planetary mission requirements into precise terrestrial analogs—powered by environmental intelligence.</p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#system">Begin the mission <i>↗</i></a>
+            <button class="button button--ghost" type="button" id="watchSequence">Watch sequence <i>▶</i></button>
+          </div>
+        </div>
+
+        <aside class="telemetry telemetry--left glass">
+          <div class="telemetry__top"><span>ATMOSPHERIC MATCH</span><i class="status-dot"></i></div>
+          <strong>94.8<small>%</small></strong>
+          <svg viewBox="0 0 220 48" role="img" aria-label="Atmospheric match trend">
+            <path d="M0 38 C25 35 28 20 55 24 S85 42 110 22 S148 8 170 17 S198 27 220 7" />
+          </svg>
+          <footer><span>Δ +2.4%</span><span>NOMINAL</span></footer>
+        </aside>
+
+        <aside class="telemetry telemetry--right glass">
+          <div class="telemetry__top"><span>CANDIDATE SITES</span><i>03</i></div>
+          <div class="candidate"><b>01</b><span>Wadi Rum<small>Jordan</small></span><strong>97%</strong></div>
+          <div class="candidate"><b>02</b><span>Atacama<small>Chile</small></span><strong>92%</strong></div>
+          <div class="candidate"><b>03</b><span>Dhofar<small>Oman</small></span><strong>89%</strong></div>
+        </aside>
+
+        <div class="scroll-cue"><span>SCROLL TO INITIATE</span><i></i></div>
+        <div class="chapter-rail" aria-hidden="true">
+          <span class="active">01</span><span>02</span><span>03</span><i></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="system" id="system">
+      <div class="system__sticky shell">
+        <div class="section-intro">
+          <p class="eyebrow"><span></span>MISSION INTELLIGENCE</p>
+          <h2>From planetary data<br />to a viable mission.</h2>
+          <p>ODYSSEY evaluates terrain, climate, geology and logistics to find the closest Earth analog for your mission.</p>
+        </div>
+
+        <div class="control glass">
+          <div class="control__bar">
+            <div class="control__brand"><span class="brand__mark"></span>ODYSSEY <i>MISSION PLANNER</i></div>
+            <div class="control__status"><span></span>ANALYSIS ACTIVE</div>
+            <div class="control__avatar">MC</div>
+          </div>
+          <div class="control__body">
+            <aside class="control__side">
+              <button class="side-item active"><i>◫</i><span>Overview</span></button>
+              <button class="side-item"><i>◎</i><span>Site analysis</span></button>
+              <button class="side-item"><i>⌁</i><span>Environment</span></button>
+              <button class="side-item"><i>◇</i><span>Mission plan</span></button>
+              <div class="side-orbit"><i></i><span>ODYSSEY-01<small>TMI / ACTIVE</small></span></div>
+            </aside>
+            <div class="map-panel">
+              <div class="map-grid"></div>
+              <div class="map-terrain"></div>
+              <svg class="route" viewBox="0 0 800 480" aria-hidden="true">
+                <path d="M40 390 C160 340 185 210 315 240 S485 360 575 220 S680 125 760 90" />
+                <circle cx="40" cy="390" r="7" /><circle cx="315" cy="240" r="7" /><circle cx="575" cy="220" r="7" /><circle cx="760" cy="90" r="9" />
+              </svg>
+              <div class="map-label map-label--one"><i></i><span>WADI RUM<small>97% MATCH</small></span></div>
+              <div class="map-label map-label--two"><i></i><span>ATACAMA<small>92% MATCH</small></span></div>
+              <div class="map-radar"><i></i><b></b><span></span></div>
+              <div class="map-caption"><span>SURFACE ANALYSIS</span><strong>24.7136° N / 46.6753° E</strong></div>
+            </div>
+            <aside class="control__data">
+              <div class="data-card"><span>MISSION CONFIDENCE</span><strong>94.8<small>%</small></strong><i style="--value: 94.8%"></i></div>
+              <div class="data-card"><span>TERRAIN SIMILARITY</span><strong>97.2<small>%</small></strong><i style="--value: 97.2%"></i></div>
+              <div class="data-card data-card--chart">
+                <span>ENVIRONMENTAL PROFILE</span>
+                <svg viewBox="0 0 240 90"><path d="M0 75 C25 60 35 70 55 44 S95 30 115 55 S155 78 175 36 S210 16 240 24" /></svg>
+              </div>
+              <button class="generate">GENERATE MISSION PLAN <i>↗</i></button>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="capabilities shell" id="capabilities">
+      <header class="capabilities__head">
+        <div><p class="eyebrow"><span></span>CORE CAPABILITIES</p><h2>Mission clarity,<br />at every layer.</h2></div>
+        <p>A connected intelligence layer for planning, evaluating and communicating planetary analog missions.</p>
+      </header>
+      <div class="capability-grid">
+        <article class="capability-card capability-card--wide reveal-card">
+          <div class="card-index">01</div><span class="card-tag">ENVIRONMENT</span>
+          <h3>Planetary analog matching</h3><p>Compare mission requirements against terrestrial environments with explainable confidence scoring.</p>
+          <div class="radar-viz"><i></i><b></b><span></span><em></em></div>
+        </article>
+        <article class="capability-card reveal-card">
+          <div class="card-index">02</div><span class="card-tag">INTELLIGENCE</span>
+          <h3>Adaptive mission logic</h3><p>Translate constraints into a structured operational plan.</p>
+          <div class="logic-viz"><i></i><i></i><i></i><i></i><span></span></div>
+        </article>
+        <article class="capability-card reveal-card">
+          <div class="card-index">03</div><span class="card-tag">SIMULATION</span>
+          <h3>Evidence-led decisions</h3><p>See why a site fits before your team commits.</p>
+          <div class="metric-viz"><strong>94.8%</strong><span>MISSION CONFIDENCE</span><i></i></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="final-cta__orbit" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="shell final-cta__content">
+        <p class="eyebrow"><span></span>YOUR NEXT MISSION STARTS HERE</p>
+        <h2>Explore beyond limits.</h2>
+        <p>Build the mission before you leave the ground.</p>
+        <a class="button button--primary" href="#top">Initialize ODYSSEY <i>↗</i></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer shell"><span>ODYSSEY © 2026</span><span>MISSION CONTROL / EARTH</span><a href="#top">RETURN TO ORBIT ↑</a></footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
