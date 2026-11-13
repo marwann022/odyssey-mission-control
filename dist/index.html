@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
+  <a class="skip-link" href="#mission">Skip to mission content</a>
   <div class="loader" aria-hidden="true">
     <div class="loader__reticle"><span></span><i></i></div>
     <div class="loader__copy">
@@ -23,6 +24,7 @@
 
   <canvas id="starfield" aria-hidden="true"></canvas>
   <div class="noise" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><i></i></div>
   <div class="cursor" aria-hidden="true"><i></i></div>
 
   <header class="nav shell">
@@ -45,7 +47,7 @@
         <div class="hero__grid" aria-hidden="true"></div>
         <div class="planet-wrap" aria-hidden="true">
           <div class="planet-glow"></div>
-          <img class="planet" src="./assets/earth-hero.png" alt="" />
+          <img class="planet" src="https://svs.gsfc.nasa.gov/vis/a010000/a011200/a011268/cover-1920.jpg" alt="" referrerpolicy="no-referrer" />
           <div class="orbit orbit--one"></div>
           <div class="orbit orbit--two"></div>
           <span class="site site--one"><i></i><b>AL-01</b></span>
@@ -67,9 +69,11 @@
           <h1><span>Plan beyond Earth.</span><em>Without leaving it.</em></h1>
           <p class="hero__lede">Turn planetary mission requirements into precise terrestrial analogs—powered by environmental intelligence.</p>
           <div class="hero__actions">
-            <a class="button button--primary" href="#system">Begin the mission <i>↗</i></a>
-            <button class="button button--ghost" type="button" id="watchSequence">Watch sequence <i>▶</i></button>
+            <button class="button button--primary" type="button" data-open-mission>Build mission brief <i aria-hidden="true">↗</i></button>
+            <button class="button button--ghost" type="button" id="watchSequence" aria-describedby="sequenceHint">Watch sequence <i aria-hidden="true">▶</i></button>
           </div>
+          <p class="sequence-hint" id="sequenceHint">Auto-plays the 8-second analysis sequence. Select again to pause.</p>
+          <p class="sr-only" id="sequenceStatus" aria-live="polite"></p>
         </div>
 
         <aside class="telemetry telemetry--left glass">
@@ -110,11 +114,11 @@
             <div class="control__avatar">MC</div>
           </div>
           <div class="control__body">
-            <aside class="control__side">
-              <button class="side-item active"><i>◫</i><span>Overview</span></button>
-              <button class="side-item"><i>◎</i><span>Site analysis</span></button>
-              <button class="side-item"><i>⌁</i><span>Environment</span></button>
-              <button class="side-item"><i>◇</i><span>Mission plan</span></button>
+            <aside class="control__side" role="tablist" aria-label="Mission planner views">
+              <button class="side-item active" type="button" role="tab" aria-selected="true" data-view="overview"><i aria-hidden="true">◫</i><span>Overview</span></button>
+              <button class="side-item" type="button" role="tab" aria-selected="false" data-view="sites"><i aria-hidden="true">◎</i><span>Site analysis</span></button>
+              <button class="side-item" type="button" role="tab" aria-selected="false" data-view="environment"><i aria-hidden="true">⌁</i><span>Environment</span></button>
+              <button class="side-item" type="button" role="tab" aria-selected="false" data-view="plan"><i aria-hidden="true">◇</i><span>Mission plan</span></button>
               <div class="side-orbit"><i></i><span>ODYSSEY-01<small>TMI / ACTIVE</small></span></div>
             </aside>
             <div class="map-panel">
@@ -124,19 +128,19 @@
                 <path d="M40 390 C160 340 185 210 315 240 S485 360 575 220 S680 125 760 90" />
                 <circle cx="40" cy="390" r="7" /><circle cx="315" cy="240" r="7" /><circle cx="575" cy="220" r="7" /><circle cx="760" cy="90" r="9" />
               </svg>
-              <div class="map-label map-label--one"><i></i><span>WADI RUM<small>97% MATCH</small></span></div>
-              <div class="map-label map-label--two"><i></i><span>ATACAMA<small>92% MATCH</small></span></div>
+              <div class="map-label map-label--one"><i></i><span id="mapLabelOne">WADI RUM<small id="mapValueOne">97% MATCH</small></span></div>
+              <div class="map-label map-label--two"><i></i><span id="mapLabelTwo">ATACAMA<small id="mapValueTwo">92% MATCH</small></span></div>
               <div class="map-radar"><i></i><b></b><span></span></div>
-              <div class="map-caption"><span>SURFACE ANALYSIS</span><strong>24.7136° N / 46.6753° E</strong></div>
+              <div class="map-caption"><span id="mapCaption">SURFACE ANALYSIS</span><strong id="mapCoordinates">24.7136° N / 46.6753° E</strong></div>
             </div>
-            <aside class="control__data">
-              <div class="data-card"><span>MISSION CONFIDENCE</span><strong>94.8<small>%</small></strong><i style="--value: 94.8%"></i></div>
-              <div class="data-card"><span>TERRAIN SIMILARITY</span><strong>97.2<small>%</small></strong><i style="--value: 97.2%"></i></div>
+            <aside class="control__data" aria-live="polite">
+              <div class="data-card"><span id="metricLabelOne">MISSION CONFIDENCE</span><strong><b id="metricValueOne">94.8</b><small>%</small></strong><i id="metricBarOne" style="--value: 94.8%"></i></div>
+              <div class="data-card"><span id="metricLabelTwo">TERRAIN SIMILARITY</span><strong><b id="metricValueTwo">97.2</b><small>%</small></strong><i id="metricBarTwo" style="--value: 97.2%"></i></div>
               <div class="data-card data-card--chart">
-                <span>ENVIRONMENTAL PROFILE</span>
+                <span id="chartLabel">ENVIRONMENTAL PROFILE</span>
                 <svg viewBox="0 0 240 90"><path d="M0 75 C25 60 35 70 55 44 S95 30 115 55 S155 78 175 36 S210 16 240 24" /></svg>
               </div>
-              <button class="generate">GENERATE MISSION PLAN <i>↗</i></button>
+              <button class="generate" type="button" data-open-mission>GENERATE MISSION PLAN <i aria-hidden="true">↗</i></button>
             </aside>
           </div>
         </div>
@@ -144,10 +148,15 @@
     </section>
 
     <section class="capabilities shell" id="capabilities">
-      <header class="capabilities__head">
+      <header class="capabilities__head reveal-section">
         <div><p class="eyebrow"><span></span>CORE CAPABILITIES</p><h2>Mission clarity,<br />at every layer.</h2></div>
         <p>A connected intelligence layer for planning, evaluating and communicating planetary analog missions.</p>
       </header>
+      <ol class="proof-row reveal-section" aria-label="How ODYSSEY works">
+        <li><b>01</b><span>Ingest requirements</span></li>
+        <li><b>02</b><span>Match analog sites</span></li>
+        <li><b>03</b><span>Generate mission plan</span></li>
+      </ol>
       <div class="capability-grid">
         <article class="capability-card capability-card--wide reveal-card">
           <div class="card-index">01</div><span class="card-tag">ENVIRONMENT</span>
@@ -169,16 +178,63 @@
 
     <section class="final-cta">
       <div class="final-cta__orbit" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="shell final-cta__content">
+      <div class="shell final-cta__content reveal-section">
         <p class="eyebrow"><span></span>YOUR NEXT MISSION STARTS HERE</p>
         <h2>Explore beyond limits.</h2>
-        <p>Build the mission before you leave the ground.</p>
-        <a class="button button--primary" href="#top">Initialize ODYSSEY <i>↗</i></a>
+        <p>Answer four mission questions and receive a terrestrial analog recommendation.</p>
+        <button class="button button--primary" type="button" data-open-mission>Build mission brief <i aria-hidden="true">↗</i></button>
       </div>
     </section>
   </main>
 
-  <footer class="footer shell"><span>ODYSSEY © 2026</span><span>MISSION CONTROL / EARTH</span><a href="#top">RETURN TO ORBIT ↑</a></footer>
+  <dialog class="mission-dialog" id="missionDialog" aria-labelledby="missionDialogTitle">
+    <div class="dialog-shell">
+      <button class="dialog-close" type="button" id="closeMissionDialog" aria-label="Close mission brief">×</button>
+      <div class="dialog-kicker">ODYSSEY / MISSION BRIEF</div>
+      <form id="missionForm">
+        <div class="dialog-intro">
+          <span>01 — INPUT</span>
+          <h2 id="missionDialogTitle">Define the mission.</h2>
+          <p>Provide the operating context. ODYSSEY will return a recommended Earth analog and readiness profile.</p>
+        </div>
+        <div class="mission-fields">
+          <label>Target environment
+            <select name="target" required>
+              <option value="mars">Mars surface</option>
+              <option value="moon">Lunar south pole</option>
+              <option value="europa">Europa ice field</option>
+            </select>
+          </label>
+          <label>Primary objective
+            <select name="objective" required>
+              <option value="mobility">Surface mobility</option>
+              <option value="habitat">Habitat operations</option>
+              <option value="science">Field science</option>
+            </select>
+          </label>
+          <label>Mission duration
+            <select name="duration" required>
+              <option value="7">7 sols</option>
+              <option value="14">14 sols</option>
+              <option value="30">30 sols</option>
+            </select>
+          </label>
+          <label>Crew size
+            <input type="number" name="crew" min="2" max="12" value="6" required />
+          </label>
+        </div>
+        <button class="button button--primary dialog-submit" type="submit">Analyze mission <i aria-hidden="true">↗</i></button>
+      </form>
+      <section class="mission-result" id="missionResult" hidden aria-live="polite">
+        <div class="dialog-intro"><span>02 — RESULT</span><h2>Analog identified.</h2></div>
+        <div class="result-site"><span>RECOMMENDED SITE</span><strong id="resultSite">Wadi Rum, Jordan</strong><small id="resultReason">Basaltic terrain and arid operating conditions</small></div>
+        <div class="result-metrics"><div><span>MISSION MATCH</span><strong id="resultMatch">97%</strong></div><div><span>READINESS</span><strong id="resultReadiness">92%</strong></div><div><span>WINDOW</span><strong id="resultWindow">14 SOLS</strong></div></div>
+        <div class="result-actions"><button class="button button--primary" type="button" id="exploreResult">Explore in control <i aria-hidden="true">↗</i></button><button class="button button--ghost" type="button" id="editMission">Edit brief</button></div>
+      </section>
+    </div>
+  </dialog>
+
+  <footer class="footer shell"><span>ODYSSEY © 2026</span><span>EARTH IMAGERY: NASA/NOAA/GSFC</span><a href="#top">RETURN TO ORBIT ↑</a></footer>
 
   <script src="./app.js"></script>
 </body>
