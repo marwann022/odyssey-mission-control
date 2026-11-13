@@ -234,9 +234,33 @@ body.loaded .scroll-cue { animation: heroEnter .8s .9s cubic-bezier(.16,1,.3,1) 
   .hero { height: 230vh; }.hero__meta { display: none; }.hero__copy { top: 43%; }.hero__copy::before { height: 420px; background: radial-gradient(ellipse, rgba(2,6,13,.72) 0%, rgba(2,6,13,.46) 42%, transparent 75%); }.hero__lede { max-width: 92%; color: #edf4fb; }.hero__actions { flex-direction: column; align-items: center; }.button { width: min(100%, 310px); }.sequence-hint { max-width: 310px; }
   .planet-wrap { inset: -2px; }.telemetry { width: 210px; }.telemetry--left { left: 18px; top: 63%; }.telemetry--right { right: 18px; top: 60%; }.telemetry--right { display: none; }
   .chapter-rail { right: 14px; }.scroll-cue { bottom: 18px; }
-  .section-intro { left: 18px; width: calc(100% - 36px); }.section-intro h2 { font-size: 48px; }
-  .control { height: 72vh; width: calc(100% - 24px); }.control__body { grid-template-columns: 1fr; }.control__side, .control__data { display: none; }.control__brand i { display: none; }
-  .capabilities { padding-top: 100px; }.capabilities__head { grid-template-columns: 1fr; gap: 30px; }.proof-row { grid-template-columns: 1fr; margin-top: -24px; }.proof-row li { border-right: 0; border-bottom: 1px solid var(--border); }.proof-row li:last-child { border-bottom: 0; }.capability-grid { grid-template-columns: 1fr; }.capability-card--wide { min-height: 600px; grid-row: auto; }.capability-card { min-height: 340px; }
+  .system { height: auto; min-height: 0; margin-top: 0; padding: 108px 0 112px; }
+  .system::before { top: 74px; font-size: clamp(30px, 11vw, 70px); letter-spacing: .12em; }
+  .system__sticky { position: relative; top: auto; height: auto; display: block; overflow: visible; }
+  .section-intro { position: relative; left: auto; width: 100%; margin-bottom: 48px; transform: none; opacity: 1; }
+  .section-intro h2 { font-size: 48px; }
+  .control { position: relative; left: auto; top: auto; width: 100%; height: auto; min-height: 0; transform: none; opacity: 1; }
+  .control::after { display: none; }
+  .control__body { height: auto; grid-template-columns: 1fr; }
+  .control__side { display: flex; gap: 6px; padding: 10px; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--border); scrollbar-width: none; }
+  .control__side::-webkit-scrollbar { display: none; }
+  .side-item { flex: 0 0 auto; width: auto; min-height: 40px; padding-inline: 14px; white-space: nowrap; }
+  .side-item:hover { transform: none; }
+  .side-orbit { display: none; }
+  .map-panel { min-height: 390px; }
+  .control__data { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding: 12px; border-top: 1px solid var(--border); border-left: 0; }
+  .data-card { min-height: 112px; opacity: 1 !important; transform: none !important; }
+  .data-card--chart { grid-column: 1 / -1; min-height: 154px; }
+  .generate { grid-column: 1 / -1; min-height: 50px; }
+  .control__brand i { display: none; }
+  .capabilities { margin-top: 0; padding: 100px 0 130px; }
+  .capabilities__head { grid-template-columns: 1fr; gap: 30px; margin-bottom: 48px; }
+  .proof-row { grid-template-columns: 1fr; margin: 0 0 34px; }
+  .proof-row li { border-right: 0; border-bottom: 1px solid var(--border); }
+  .proof-row li:last-child { border-bottom: 0; }
+  .capability-grid { grid-template-columns: 1fr; gap: 16px; }
+  .capability-card--wide { min-height: 600px; grid-row: auto; }
+  .capability-card { min-height: 360px; }
   .footer { gap: 20px; flex-wrap: wrap; padding-block: 30px; }
   .cursor { display: none; }
   .dialog-shell { padding: 44px 26px 30px; }.mission-fields { grid-template-columns: 1fr; }.result-actions { flex-direction: column; }.result-metrics { grid-template-columns: 1fr; }
@@ -244,7 +268,37 @@ body.loaded .scroll-cue { animation: heroEnter .8s .9s cubic-bezier(.16,1,.3,1) 
 
 @media (max-width: 540px) {
   h1 { font-size: clamp(44px, 14vw, 58px); line-height: .9; } h1 em { color: rgba(235,244,252,.2); -webkit-text-stroke-width: 1px; }.hero__copy { top: 41%; }.hero__lede { margin-top: 22px; font-size: 14px; line-height: 1.55; }.hero__actions { margin-top: 26px; }.button { min-height: 50px; }.telemetry--left { width: calc(100% - 36px); top: 66%; }.planet-wrap { inset: -2px; }.site--one { left: 20%; }.site--two { left: 58%; }.site--three { display: none; }
-  .section-intro h2 { font-size: 42px; }.capabilities h2, .final-cta h2 { font-size: 48px; }.capability-card { padding: 26px; }.capability-card h3, .capability-card:not(.capability-card--wide) h3 { margin-top: 42px; font-size: 34px; }.final-cta__content > p:not(.eyebrow) { padding-inline: 20px; line-height: 1.6; }.mission-dialog { width: calc(100% - 18px); max-height: calc(100vh - 18px); }.dialog-intro h2 { font-size: 42px; }
+  .system { padding: 88px 0; }
+  .section-intro { margin-bottom: 34px; }
+  .section-intro h2 { font-size: 42px; }
+  .section-intro > p:last-child { margin-top: 18px; font-size: 14px; }
+  .control__bar { height: 54px; padding-inline: 14px; }
+  .control__status { display: none; }
+  .control__side { padding: 8px; }
+  .side-item { min-height: 38px; padding-inline: 12px; }
+  .map-panel { min-height: 310px; }
+  .map-radar { width: 82px; height: 82px; }
+  .map-radar i { inset: 12px; }.map-radar b { inset: 27px; }.map-radar span { inset: 39px; }
+  .map-label { font-size: 8px; }.map-label--one { left: 12%; top: 58%; }.map-label--two { right: 8%; top: 24%; }
+  .map-caption { left: 12px; right: 12px; bottom: 12px; font-size: 7px; }
+  .control__data { grid-template-columns: 1fr 1fr; padding: 10px; }
+  .data-card { min-height: 104px; padding: 12px; }
+  .data-card > strong { font-size: 24px; }
+  .data-card--chart { min-height: 140px; }
+  .capabilities { padding: 82px 0 104px; }
+  .capabilities__head { gap: 22px; margin-bottom: 34px; }
+  .capabilities h2, .final-cta h2 { font-size: 48px; }
+  .capabilities__head > p { font-size: 14px; }
+  .proof-row { margin-bottom: 24px; }
+  .proof-row li { min-height: 60px; padding-inline: 18px; }
+  .capability-card { min-height: 330px; padding: 26px; }
+  .capability-card--wide { min-height: 520px; }
+  .capability-card h3, .capability-card:not(.capability-card--wide) h3 { margin-top: 42px; font-size: 34px; }
+  .radar-viz { bottom: -125px; width: 390px; height: 390px; }
+  .radar-viz i { inset: 66px; }
+  .logic-viz { left: 24px; right: 24px; bottom: 28px; }
+  .metric-viz { left: 26px; right: 26px; bottom: 28px; }
+  .final-cta__content > p:not(.eyebrow) { padding-inline: 20px; line-height: 1.6; }.mission-dialog { width: calc(100% - 18px); max-height: calc(100vh - 18px); }.dialog-intro h2 { font-size: 42px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
