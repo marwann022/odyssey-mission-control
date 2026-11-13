@@ -198,28 +198,44 @@
           <p>Provide the operating context. ODYSSEY will return a recommended Earth analog and readiness profile.</p>
         </div>
         <div class="mission-fields">
-          <label>Target environment
-            <select name="target" required>
-              <option value="mars">Mars surface</option>
-              <option value="moon">Lunar south pole</option>
-              <option value="europa">Europa ice field</option>
-            </select>
-          </label>
-          <label>Primary objective
-            <select name="objective" required>
-              <option value="mobility">Surface mobility</option>
-              <option value="habitat">Habitat operations</option>
-              <option value="science">Field science</option>
-            </select>
-          </label>
-          <label>Mission duration
-            <select name="duration" required>
-              <option value="7">7 sols</option>
-              <option value="14">14 sols</option>
-              <option value="30">30 sols</option>
-            </select>
-          </label>
-          <label>Crew size
+          <div class="field">
+            <div class="field-label"><b>01</b><span>Target environment</span><em>Required</em></div>
+            <div class="select-field" data-select>
+              <input type="hidden" name="target" value="mars" />
+              <button class="select-trigger" type="button" role="combobox" aria-haspopup="listbox" aria-expanded="false"><span class="select-value">Mars surface</span><i aria-hidden="true"></i></button>
+              <div class="select-menu" role="listbox" aria-label="Target environment" hidden>
+                <button class="select-option" type="button" role="option" aria-selected="true" data-value="mars"><span>Mars surface</span><small>Arid terrain · basaltic geology</small></button>
+                <button class="select-option" type="button" role="option" aria-selected="false" data-value="moon"><span>Lunar south pole</span><small>Polar isolation · extreme logistics</small></button>
+                <button class="select-option" type="button" role="option" aria-selected="false" data-value="europa"><span>Europa ice field</span><small>Glacial access · sub-surface science</small></button>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label"><b>02</b><span>Primary objective</span><em>Required</em></div>
+            <div class="select-field" data-select>
+              <input type="hidden" name="objective" value="mobility" />
+              <button class="select-trigger" type="button" role="combobox" aria-haspopup="listbox" aria-expanded="false"><span class="select-value">Surface mobility</span><i aria-hidden="true"></i></button>
+              <div class="select-menu" role="listbox" aria-label="Primary objective" hidden>
+                <button class="select-option" type="button" role="option" aria-selected="true" data-value="mobility"><span>Surface mobility</span><small>Traverse planning and route validation</small></button>
+                <button class="select-option" type="button" role="option" aria-selected="false" data-value="habitat"><span>Habitat operations</span><small>Crew systems and long-stay readiness</small></button>
+                <button class="select-option" type="button" role="option" aria-selected="false" data-value="science"><span>Field science</span><small>Sampling, mapping and site studies</small></button>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label"><b>03</b><span>Mission duration</span><em>Required</em></div>
+            <div class="select-field" data-select>
+              <input type="hidden" name="duration" value="7" />
+              <button class="select-trigger" type="button" role="combobox" aria-haspopup="listbox" aria-expanded="false"><span class="select-value">7 sols</span><i aria-hidden="true"></i></button>
+              <div class="select-menu" role="listbox" aria-label="Mission duration" hidden>
+                <button class="select-option" type="button" role="option" aria-selected="true" data-value="7"><span>7 sols</span><small>Rapid validation sprint</small></button>
+                <button class="select-option" type="button" role="option" aria-selected="false" data-value="14"><span>14 sols</span><small>Standard analog campaign</small></button>
+                <button class="select-option" type="button" role="option" aria-selected="false" data-value="30"><span>30 sols</span><small>Extended operations study</small></button>
+              </div>
+            </div>
+          </div>
+          <label class="field field--input">
+            <span class="field-label"><b>04</b><span>Crew size</span><em>2–12</em></span>
             <input type="number" name="crew" min="2" max="12" value="6" required />
           </label>
         </div>

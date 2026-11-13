@@ -234,6 +234,81 @@ plannerTabs.forEach((tab, index) => {
   });
 });
 
+const customSelects = [...document.querySelectorAll('[data-select]')];
+
+function closeCustomSelect(select, restoreFocus = false) {
+  const trigger = select.querySelector('.select-trigger');
+  const menu = select.querySelector('.select-menu');
+  select.classList.remove('is-open', 'is-up');
+  trigger.setAttribute('aria-expanded', 'false');
+  menu.hidden = true;
+  if (restoreFocus) trigger.focus();
+}
+
+function openCustomSelect(select) {
+  customSelects.forEach((item) => {
+    if (item !== select) closeCustomSelect(item);
+  });
+  const trigger = select.querySelector('.select-trigger');
+  const menu = select.querySelector('.select-menu');
+  const selected = select.querySelector('.select-option[aria-selected="true"]');
+  menu.hidden = false;
+  select.classList.add('is-open');
+  trigger.setAttribute('aria-expanded', 'true');
+  const triggerRect = trigger.getBoundingClientRect();
+  const menuRect = menu.getBoundingClientRect();
+  if (menuRect.bottom > window.innerHeight - 16 && triggerRect.top > menuRect.height + 16) select.classList.add('is-up');
+  selected?.focus();
+}
+
+customSelects.forEach((select) => {
+  const trigger = select.querySelector('.select-trigger');
+  const hiddenInput = select.querySelector('input[type="hidden"]');
+  const value = select.querySelector('.select-value');
+  const options = [...select.querySelectorAll('.select-option')];
+
+  trigger.addEventListener('click', () => {
+    if (select.classList.contains('is-open')) closeCustomSelect(select, true);
+    else openCustomSelect(select);
+  });
+
+  trigger.addEventListener('keydown', (event) => {
+    if (!['Enter', ' ', 'ArrowDown', 'ArrowUp'].includes(event.key)) return;
+    event.preventDefault();
+    openCustomSelect(select);
+  });
+
+  options.forEach((option, index) => {
+    option.addEventListener('click', () => {
+      options.forEach((item) => item.setAttribute('aria-selected', String(item === option)));
+      hiddenInput.value = option.dataset.value;
+      value.textContent = option.querySelector('span').textContent;
+      closeCustomSelect(select, true);
+    });
+    option.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeCustomSelect(select, true);
+        return;
+      }
+      if (event.key === 'Tab') {
+        closeCustomSelect(select);
+        return;
+      }
+      const keyMap = { ArrowDown: index + 1, ArrowUp: index - 1, Home: 0, End: options.length - 1 };
+      if (!(event.key in keyMap)) return;
+      event.preventDefault();
+      options[(keyMap[event.key] + options.length) % options.length].focus();
+    });
+  });
+});
+
+document.addEventListener('click', (event) => {
+  customSelects.forEach((select) => {
+    if (!select.contains(event.target)) closeCustomSelect(select);
+  });
+});
+
 const missionDialog = document.getElementById('missionDialog');
 const missionForm = document.getElementById('missionForm');
 const missionResult = document.getElementById('missionResult');
@@ -246,7 +321,7 @@ function openMissionDialog(event) {
   missionResult.hidden = true;
   missionForm.hidden = false;
   missionDialog.showModal();
-  missionForm.querySelector('select').focus();
+  missionForm.querySelector('.select-trigger').focus();
 }
 
 function closeDialog() {
@@ -284,7 +359,7 @@ missionForm.addEventListener('submit', (event) => {
 document.getElementById('editMission').addEventListener('click', () => {
   missionResult.hidden = true;
   missionForm.hidden = false;
-  missionForm.querySelector('select').focus();
+  missionForm.querySelector('.select-trigger').focus();
 });
 
 document.getElementById('exploreResult').addEventListener('click', () => {
